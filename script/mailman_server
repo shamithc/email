@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'bundler/setup'
+require 'mailman'
+
+
+
+Mailman.config.pop3 = {
+  server: 'pop.gmail.com',port: 995, ssl:true,
+  username: 'shamithc',
+  password: ''
+}
+
+
+
+Mailman::Application.run do
+  default do 
+    Ticket.create!(subject: message.subject, body: message.body.decoded, from: message.from.first)
+  end
+end
